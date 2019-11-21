@@ -3,6 +3,7 @@ import argparse
 import sys
 import os
 
+
 def fetch_gene_counts(gene, count_file, output_file):
     output = open(output_file, 'w')
     version = None
@@ -11,14 +12,13 @@ def fetch_gene_counts(gene, count_file, output_file):
     data_file_name = count_file
     data_header = None
     gene_name_col = 1
-    
-    if os.path.exists(data_file_name) == True:
+
+    if os.path.exists(data_file_name) is True:
         pass
     else:
         print("gene file does not exist! exiting...")
         sys.exit(1)
 
-    
     # Read gzip read count file. Remove the headers
     for l in gzip.open(data_file_name, 'rt'):
         if version is None:
@@ -43,9 +43,10 @@ def fetch_gene_counts(gene, count_file, output_file):
                     output.write('\n')
             output.close()
 
-    if os.path.exists(output_file) == False:
+    if os.path.exists(output_file) is False:
         print("gene name not found!")
         sys.exit(1)
+
 
 def main():
     parser = argparse.ArgumentParser(
@@ -59,6 +60,7 @@ def main():
     args = parser.parse_args()
 
     fetch_gene_counts(args.gene, args.gene_reads, args.output_file)
+
 
 if __name__ == '__main__':
     main()

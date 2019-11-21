@@ -18,3 +18,6 @@ script:
     - bash test_get_gene_counts.sh
     - python test_get_tissue_samples.py
     - bash test_get_tissue_samples.sh
+    - pycodestyle box.py
+    - pycodestyle get_tissue_samples.py
+    - pycodestyle get_gene_counts.py

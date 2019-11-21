@@ -3,9 +3,12 @@ import sys
 import os
 import matplotlib.pyplot as plt
 
+
 def boxplot(data, metadata, y_label, plot_title, output_file):
+
     try:
-        plt.subplots(nrows=len(plot_title), figsize=(10, 8))
+        plt.subplots(nrows=len(plot_title),
+                     figsize=(len(plot_title)*4, len(metadata)*4))
 
         for i in range(len(plot_title)):
             plt.subplot(len(plot_title), 1, i+1)
@@ -22,18 +25,16 @@ def boxplot(data, metadata, y_label, plot_title, output_file):
                 plt.xlabel('Gene')
 
         plt.savefig(output_file)
-    
+
     except TypeError:
         sys.stderr.write('data is the wrong format!')
         sys.exit(1)
-    except:
-        sys.stderr.write('Unknown error occurred...')
-        sys.exit(1)
+
 
 if __name__ == '__main__':
-    
+
     parser = argparse.ArgumentParser(
-    description='Creates a boxplot for each tissue type')
+        description='Creates a boxplot for each tissue type')
 
     parser.add_argument('--output_file',
                         type=str,
@@ -93,7 +94,9 @@ if __name__ == '__main__':
             # For each sample, look for where it belongs in the dictionary
             for s in sample_ids:
                 if s in gene_dict.keys():
-                    count_list.append(gene_dict[sample_id])
+                    # If it's a key we're looking for, add counts to input
+                    # for the boxplot (keys are specified in arguments)
+                    count_list.append(gene_dict[s])
             counts_and_samples.append(count_list)
         input_boxlist.append(counts_and_samples)
 

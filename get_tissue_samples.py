@@ -2,6 +2,7 @@ import argparse
 import sys
 import os
 
+
 def linear_search(key, L):
     # Search from beginning to end for a match. Return index
     # when the first match is found
@@ -9,6 +10,7 @@ def linear_search(key, L):
         if key == L[i]:
             return i
     return -1
+
 
 def fetch_metadata(group_type, sample_attributes):
     meta_header = None
@@ -28,10 +30,10 @@ def fetch_metadata(group_type, sample_attributes):
         # Sample names are in the first column
         sample_idx = 0
         # Find the group we're looking for
-               # The key will be column with the group type e.g. Blood
+        # The key will be column with the group type e.g. Blood
         key = sample_line[target_idx]
         # The value will be whatever samples can be found that match
-        # the key e.g. GTEX-XYZ 
+        # the key e.g. GTEX-XYZ
         value = sample_line[sample_idx]
         search = None
 
@@ -39,20 +41,21 @@ def fetch_metadata(group_type, sample_attributes):
         if key in keys_and_values.keys():
             search = keys_and_values[key]
 
-        # If we have the key already, it's not necessary to add. Otherwise, populate
-        # our growing array
+        # If we have the key already, it's not necessary to add.
+        # Otherwise, populate our growing array
         if (search is None):
             keys_and_values[key] = [value]
             target_group.append(key)
         else:
-        # This isn't necessary, but I can use it for bugfinding
+            # This isn't necessary, but I can use it for bugfinding
             search.append(value)
     f.close()
     return keys_and_values, target_group
 
+
 def main():
     parser = argparse.ArgumentParser(
-    description='fetch sample information from a file')
+        description='fetch sample information from a file')
 
     # require file name as one of the inputs
     parser.add_argument('--output_file',
@@ -75,8 +78,8 @@ def main():
     args = parser.parse_args()
 
     samples_set, target_group = fetch_metadata(args.group_type,
-                                        args.sample_attributes)
-    
+                                               args.sample_attributes)
+
     output = open(args.output_file, 'w')
     for i in range(len(target_group)):
         output.write(target_group[i] + ': ')
@@ -90,5 +93,7 @@ def main():
     output.close()
 
     sys.exit(0)
+
+
 if __name__ == '__main__':
     main()
