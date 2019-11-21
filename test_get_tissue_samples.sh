@@ -4,7 +4,7 @@ test -e ssshtest || wget -q https://raw.githubusercontent.com/ryanlayer/ssshtest
 
 METADATA=GTEx_Analysis_v8_Annotations_SampleAttributesDS.txt
 GROUP='SMTS'
-OUTFILE='test_metadata.txt'
+OUTFILE='test_meta.txt'
 
 run standard_test_file python get_tissue_samples.py \
         --group_type $GROUP \
